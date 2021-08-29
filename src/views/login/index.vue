@@ -12,7 +12,7 @@
         </span>
         <el-input
           ref="loginname"
-          v-model="loginForm.username"
+          v-model="loginForm.loginname"
           placeholder="用户名"
           name="loginname"
           type="text"
@@ -71,7 +71,7 @@ export default {
         password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateLoginname }],
+        loginname: [{ required: true, trigger: 'blur', validator: validateLoginname }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
@@ -94,8 +94,9 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          alert('登录')
           this.loading = true
+          console.log('loginname:' + this.loginForm.loginname)
+          console.log('password:' + this.loginForm.password)
           this.login(this.loginForm).then(() => {
             // this.role()
             console.log('success')

@@ -3,6 +3,8 @@ import { login } from '@/api/user'
 // 定义方法
 const actions = {
   login(userInfo) {
+    console.log('userInfo:' + userInfo)
+    console.log('userInfo:' + userInfo.loginname)
     return new Promise((resolve, reject) => {
       login(userInfo).then(response => {
         resolve()
