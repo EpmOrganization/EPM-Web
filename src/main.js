@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 // 引入 ElementUI
 import ElementUI from 'element-ui'
+// 引入路由守卫
+import '@/permission'
 
 Vue.use(ElementUI, { size: 'small' })
 Vue.config.productionTip = false

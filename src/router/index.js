@@ -13,11 +13,27 @@ export const systemRoutes = [
     hidden: true
   }
 ]
+// 业务路由
+export const businessRoutes = [
+  {
+    path: '/',
+    // 路由重定向
+    redirect: '/home',
+    // 子路由
+    children: [{
+      path: 'home',
+      name: 'Home',
+      // 组件
+      component: () => import('@/views/home/index'),
+      meta: { title: '我的工作台' }
+    }]
+  }
+]
 
 const createRouter = () => new VueRouter({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: [...systemRoutes]
+  routes: [...systemRoutes, ...businessRoutes]
 })
 
 const router = createRouter()

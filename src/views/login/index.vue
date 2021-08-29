@@ -34,9 +34,9 @@
           name="password"
           tabindex="2"
         />
-        <span class="show-pwd" @click="showPwd">
+        <!-- <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
+        </span> -->
       </el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
     </el-form>
@@ -94,9 +94,11 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
+          alert('登录')
           this.loading = true
           this.login(this.loginForm).then(() => {
-            this.role()
+            // this.role()
+            console.log('success')
           }).catch(() => {
             this.loading = false
           })

@@ -15,5 +15,7 @@ const actions = {
 
 // 导出
 export default {
+  // ?使其成为带命名空间的模块，保证在变量名一样的时候，添加一个父级名拼接
+  namespaced: true,
   actions
 }
