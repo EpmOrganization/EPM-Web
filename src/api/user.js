@@ -9,3 +9,10 @@ export function login(data) {
     urlType: 'login'
   })
 }
+
+export function userinfo() {
+  return request({
+    url: '/api/user/GetCurrentUser',
+    method: 'get'
+  })
+}

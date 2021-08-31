@@ -57,23 +57,27 @@ service.interceptors.response.use(
    * Here is just an example
    * You can also judge the status by HTTP Status Code
    */
+
+  /*
+  后端正确返回，在根据code进行判断
+  */
   response => {
     const res = response.data
     if (Object.prototype.toString.call(res) === '[object Object]') {
-      if (res.resultCode === 100) {
+      if (res.code === 100) {
         store.dispatch({
           type: 'user/logout'
         }).then(res => {
           router.push({ path: '/login' })
           return false
         })
-      } if (res.resultCode !== 1 && res.resultCode !== 100) {
+      } if (res.code !== 1 && res.code !== 100) {
         Message({
-          message: res.resultMsg || '接口请求错误',
+          message: res.msg || '接口请求错误',
           type: 'error',
           duration: 5 * 1000
         })
-        return Promise.reject(new Error(res.resultMsg || 'Error'))
+        return Promise.reject(new Error(res.msg || 'Error'))
       } else {
         return res
       }
@@ -81,6 +85,10 @@ service.interceptors.response.use(
       return response
     }
   },
+
+  /*
+  后端处理失败返回
+  */
   error => {
     const { status } = error.response
     if (status === 409 || status === 410) {

@@ -22,7 +22,7 @@ router.beforeEach((to, from, next) => {
       // 跳转到首页 redirect to home page
       next({ path: '/' })
     } else {
-      console.log(hasToken)
+      next()
     }
   } else {
     // 没有token值

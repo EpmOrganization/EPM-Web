@@ -95,11 +95,11 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          console.log('loginname:' + this.loginForm.loginname)
-          console.log('password:' + this.loginForm.password)
+          // 调用store下user模块里面的login方法
           this.login(this.loginForm).then(() => {
             // this.role()
-            console.log('success')
+            // 登录成功，跳转到首页
+            this.$router.push({ path: '/' })
           }).catch(() => {
             this.loading = false
           })

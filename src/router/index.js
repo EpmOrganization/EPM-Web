@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+/* Layout */
+import Layout from '@/layout'
+
 // 系统路由
 export const systemRoutes = [
   {
@@ -17,16 +20,34 @@ export const systemRoutes = [
 export const businessRoutes = [
   {
     path: '/',
-    // 路由重定向
+    component: Layout,
     redirect: '/home',
-    // 子路由
     children: [{
       path: 'home',
       name: 'Home',
-      // 组件
       component: () => import('@/views/home/index'),
-      meta: { title: '我的工作台' }
+      meta: { title: '我的工作台', icon: 'el-icon-s-home' }
     }]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    meta: { title: '系统管理', icon: 'el-icon-s-tools' },
+    redirect: '/systemlist',
+    children: [
+      {
+        path: 'systemlist',
+        name: 'systemlist',
+        component: () => import('@/views/system/department/list'),
+        meta: { title: '部门管理' }
+      },
+      {
+        path: 'userlist',
+        name: 'userlist',
+        component: () => import('@/views/system/user/list'),
+        meta: { title: '用户管理' }
+      }
+    ]
   }
 ]
 
