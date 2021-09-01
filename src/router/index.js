@@ -36,8 +36,8 @@ export const businessRoutes = [
     redirect: '/systemlist',
     children: [
       {
-        path: 'systemlist',
-        name: 'systemlist',
+        path: 'deptlist',
+        name: 'deptlist',
         component: () => import('@/views/system/department/list'),
         meta: { title: '部门管理' }
       },
@@ -46,6 +46,12 @@ export const businessRoutes = [
         name: 'userlist',
         component: () => import('@/views/system/user/list'),
         meta: { title: '用户管理' }
+      },
+      {
+        path: 'menulist',
+        name: 'menulist',
+        component: () => import('@/views/system/menu/list'),
+        meta: { title: '菜单管理' }
       }
     ]
   }
