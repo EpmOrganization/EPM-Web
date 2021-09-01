@@ -19,6 +19,7 @@ export function OrganizationalStructure(params) {
   })
 }
 
+// 新增部门
 export function department_add(data) {
   return request({
     url: '/api/department',
@@ -27,7 +28,11 @@ export function department_add(data) {
   })
 }
 
-export function department_del(params) {
+// 删除
+export function department_del(id) {
+  const params = {
+    id
+  }
   return request({
     url: '/api/department',
     method: 'delete',
@@ -35,6 +40,7 @@ export function department_del(params) {
   })
 }
 
+// 修改
 export function department_edit(data) {
   return request({
     url: '/api/department',
@@ -43,39 +49,39 @@ export function department_edit(data) {
   })
 }
 
-export function department_adddep(data) {
-  return request({
-    url: '/api/usergroup',
-    method: 'post',
-    data
-  })
-}
+// export function department_adddep(data) {
+//   return request({
+//     url: '/api/department',
+//     method: 'post',
+//     data
+//   })
+// }
 
-export function department_depedit(data) {
-  return request({
-    url: '/api/usergroup',
-    method: 'put',
-    data
-  })
-}
+// export function department_depedit(data) {
+//   return request({
+//     url: '/api/department',
+//     method: 'put',
+//     data
+//   })
+// }
 
-export function department_depdel(id) {
-  const params = {
-    id
-  }
-  return request({
-    url: '/api/usergroup',
-    method: 'delete',
-    params
-  })
-}
+// export function department_depdel(id) {
+//   const params = {
+//     id
+//   }
+//   return request({
+//     url: '/api/department',
+//     method: 'delete',
+//     params
+//   })
+// }
 
 export function department_GetList() {
   const data = {
     isPaging: false
   }
   return request({
-    url: '/api/OrganizationalStructure/GetList',
+    url: '/api/department/GetList',
     method: 'post',
     data
   })

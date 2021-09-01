@@ -12,7 +12,7 @@
     >
       <el-table-column
         prop="name"
-        label="名称"
+        label="部门名称"
         width="180"
       />
       <el-table-column
@@ -23,11 +23,6 @@
       <el-table-column
         prop="createTime"
         label="创建时间"
-      />
-
-      <el-table-column
-        prop="type"
-        label="类型"
       />
 
       <el-table-column
@@ -59,6 +54,7 @@
 </template>
 
 <script>
+// 引入新增部门组件
 import adddep from './dialog/adddep'
 import { mapActions } from 'vuex'
 export default {
@@ -77,14 +73,15 @@ export default {
     this.updatalist()
   },
   methods: {
-    ...mapActions('department', ['department_depdel', 'OrganizationalStructure']),
+    ...mapActions('department', ['department_del', 'OrganizationalStructure']),
     async updatalist() {
       const data = await this.OrganizationalStructure()
       this.tableData = data
     },
+    // 新增部门事件
     add() {
       this.depprop = {
-        title: '新增事业部',
+        title: '新增部门',
         dialogVisible: true
       }
     },
@@ -92,32 +89,33 @@ export default {
       const { id } = row
       this.$router.push({ path: '/system/deplist', query: { id }})
     },
+    // 编辑
     edit(row) {
-      const { parentGroupID, name, type, description, id, dep } = row
+      const { parentID, name, description, id, dep } = row
       const data = {
-        parentGroupID,
+        parentID,
         name,
-        type,
         description,
         dep,
         id
       }
       this.depprop = {
-        title: '编辑组织架构',
+        title: '编辑部门',
         data,
         dialogVisible: true
       }
     },
+    // 删除
     del(row) {
       const { id } = row
-      this.$confirm('操作将删除该组织架构，是否继续?', '提示', {
+      this.$confirm('操作将删除该部门，是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.department_depdel(id).then(res => {
+        this.department_del(id).then(res => {
           this.$message({
-            message: res.resultMsg,
+            message: res.msg,
             type: 'success'
           })
           this.updatalist()

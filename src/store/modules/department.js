@@ -1,5 +1,5 @@
 
-import { department_tree, department_add, department_edit, department_del, department_depdel, department_depedit, department_adddep, department_GetList, OrganizationalStructure } from '@/api/department.js'
+import { department_tree, department_add, department_edit, department_del, department_GetList, OrganizationalStructure } from '@/api/department.js'
 
 const actions = {
   // 获取部门树形结构
@@ -42,42 +42,42 @@ const actions = {
       })
     })
   },
-  department_del({ commit }, data) {
+  department_del({ commit }, id) {
     return new Promise((resolve, reject) => {
-      department_del(data).then(response => {
+      department_del(id).then(response => {
         resolve(response)
       }).catch(error => {
         reject(error)
       })
     })
   },
-  department_depdel({ commit }, id) {
-    return new Promise((resolve, reject) => {
-      department_depdel(id).then(response => {
-        resolve(response)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-  department_depedit({ commit }, data) {
-    return new Promise((resolve, reject) => {
-      department_depedit(data).then(response => {
-        resolve(response)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-  department_adddep({ commit }, data) {
-    return new Promise((resolve, reject) => {
-      department_adddep(data).then(response => {
-        resolve(response)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
+  //   department_depdel({ commit }, id) {
+  //     return new Promise((resolve, reject) => {
+  //       department_depdel(id).then(response => {
+  //         resolve(response)
+  //       }).catch(error => {
+  //         reject(error)
+  //       })
+  //     })
+  //   },
+  //   department_depedit({ commit }, data) {
+  //     return new Promise((resolve, reject) => {
+  //       department_depedit(data).then(response => {
+  //         resolve(response)
+  //       }).catch(error => {
+  //         reject(error)
+  //       })
+  //     })
+  //   },
+  //   department_adddep({ commit }, data) {
+  //     return new Promise((resolve, reject) => {
+  //       department_adddep(data).then(response => {
+  //         resolve(response)
+  //       }).catch(error => {
+  //         reject(error)
+  //       })
+  //     })
+  //   },
   department_GetList({ commit }, data) {
     return new Promise((resolve, reject) => {
       department_GetList(data).then(response => {

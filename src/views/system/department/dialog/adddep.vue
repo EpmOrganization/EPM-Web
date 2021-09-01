@@ -1,4 +1,6 @@
+
 <template>
+  <!-- 新增部门组件 -->
   <el-dialog
     v-if="prop.dialogVisible"
     :title="prop.title"
@@ -7,28 +9,16 @@
     width="30%"
   >
     <el-form ref="from" :model="from" :rules="rules" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="名称" prop="name">
+      <el-form-item label="部门名称" prop="name">
         <el-input v-model="from.name" />
       </el-form-item>
-      <el-form-item label="上级" prop="dep">
+      <el-form-item label="上级部门" prop="dep">
         <el-cascader
           v-model="from.dep"
           :options="treedata"
           :show-all-levels="false"
           :props="props"
         />
-      </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-select v-model="from.type" placeholder="请选择">
-          <el-option
-            label="事业部"
-            :value="0"
-          />
-          <el-option
-            label="部门"
-            :value="1"
-          />
-        </el-select>
       </el-form-item>
       <el-form-item label="备注" prop="description">
         <el-input v-model="from.description" type="textarea" />
@@ -53,12 +43,13 @@ export default {
   },
   data() {
     return {
-      api: 'department_adddep',
+      api: 'department_add',
       from: {
-        parentGroupID: null,
+        // 上级部门ID
+        parentID: null,
         name: null,
-        type: null,
         description: null,
+        // 选择的上级部门
         dep: []
       },
       props: {
@@ -67,10 +58,10 @@ export default {
         children: 'children',
         checkStrictly: true
       },
+      // 上级部门绑定的数据
       treedata: [],
       rules: {
-        name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-        type: [{ required: true, message: '请选择类型', trigger: 'change' }]
+        name: [{ required: true, message: '请输入名称', trigger: 'blur' }]
       }
     }
   },
@@ -85,16 +76,18 @@ export default {
     })
   },
   methods: {
-    ...mapActions('department', ['department_adddep', 'department_depedit', 'OrganizationalStructure']),
+    ...mapActions('department', ['department_add', 'department_depedit', 'OrganizationalStructure']),
+    // 提交
     submit(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const data = JSON.parse(JSON.stringify(this.from))
-          data.parentGroupID = data.dep[data.dep.length - 1]
+          data.parentID = data.dep[data.dep.length - 1]
           data.dep = JSON.stringify(data.dep)
           this[this.api](data).then(res => {
+            // 提示信息
             this.$message({
-              message: res.resultMsg,
+              message: res.msg,
               type: 'success'
             })
             this.$emit('close', true)
