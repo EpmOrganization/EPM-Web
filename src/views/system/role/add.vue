@@ -2,9 +2,9 @@
   <div v-loading="loading">
     <el-form ref="from" :model="from" :rules="fromrules" label-width="100px" class="demo-ruleForm">
       <div class="theader"><p>基本信息</p></div>
-      <el-form-item label="角色名称" prop="roleName">
+      <el-form-item label="角色名称" prop="name">
         <el-col :span="8">
-          <el-input v-model.trim="from.roleName" />
+          <el-input v-model.trim="from.name" />
         </el-col>
       </el-form-item>
       <el-form-item label="角色描述" prop="description">
@@ -46,18 +46,18 @@ export default {
     return {
       api: 'role',
       from: {
-        roleName: '',
+        name: '',
         description: ''
       },
       loading: false,
       defaultProps: {
-        children: 'children',
+        children: 'childrenMenu',
         label: 'name'
       },
       checked: [],
       treedata: [],
       fromrules: {
-        roleName: [{ required: true, message: '请输入角色名称', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入角色名称', trigger: 'blur' }]
       }
     }
   },
@@ -66,10 +66,10 @@ export default {
   },
   methods: {
     // :check-strictly="true"
-    ...mapActions('fun', ['fun_tree']),
+    ...mapActions('menu', ['menu_tree']),
     ...mapActions('role', ['role', 'role_detail', 'role_edit']),
     async getdata() {
-      const treedata = await this.fun_tree()
+      const treedata = await this.menu_tree()
       // const obj = {}
       // const peon = treedata.reduce((cur, next) => {
       //   obj[next.id] ? '' : obj[next.id] = true && cur.push(next)
@@ -86,26 +86,28 @@ export default {
       // })
       // console.log(peon)
       this.treedata = treedata
+      // 编辑时获取数据
       if (this.$route.query.id) {
         this.api = 'role_edit'
         this.loading = true
+        // 根据角色id获取角色明细数据
         const { data } = await this.role_detail(this.$route.query.id)
         if (data.halfCheckeds) {
           data.halfCheckeds = JSON.parse(data.halfCheckeds)
           data.halfCheckeds.map(v => {
-            data.allottedAuthorities.map((s, i) => {
+            data.allottedMenus.map((s, i) => {
               if (s === v) {
-                data.allottedAuthorities.splice(i, 1)
+                data.allottedMenus.splice(i, 1)
               }
             })
           })
         }
-        const { allottedAuthorities, clusterID, id, description, roleName } = data
+        const { allottedMenus, clusterID, id, description, name } = data
         this.from = {
           description,
           clusterID,
           id,
-          roleName
+          name
         }
         // allottedAuthorities.map((v, i) => {
         //   treedata.map(s => {
@@ -114,25 +116,27 @@ export default {
         //     }
         //   })
         // })
-        this.checked = allottedAuthorities
+        this.checked = allottedMenus
         this.loading = false
       }
     },
 
+    // 保存
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const checkedlist = this.$refs.tree.getCheckedKeys()
           const HalfCheckedKeys = this.$refs.tree.getHalfCheckedKeys()
-          const allottedAuthorities = [...checkedlist, ...HalfCheckedKeys]
-          this.from.allottedAuthorities = allottedAuthorities
+          const allottedMenus = [...checkedlist, ...HalfCheckedKeys]
+          this.from.allottedMenus = allottedMenus
           this.from.halfcheckeds = JSON.stringify(HalfCheckedKeys)
           this[this.api](this.from).then(res => {
-            if (res.resultCode === 1) {
+            if (res.code === 1) {
               this.$message({
                 message: this.api === 'role' ? '新增成功' : '编辑成功',
                 type: 'success'
               })
+              // 跳转到角色管理页面
               this.$router.push({ path: '/system/rolelist' })
             }
           })

@@ -43,7 +43,7 @@ export function role_detail(id) {
   const params = {}
   params.id = id
   return request({
-    url: '/api/RoleAuthorityDetail',
+    url: '/api/rolemenu',
     method: 'get',
     params
   })
