@@ -69,7 +69,7 @@ export default {
         value: '',
         description: '',
         type: '',
-        parentAuthorityID: '',
+        parentMenuID: '',
         parentList: []
       },
       isrulesName: '',
@@ -114,8 +114,8 @@ export default {
       deep: true,
       handler: function(newV, oldV) {
         if (newV.edit) {
-          const { name, value, description, type, parentAuthorityID, parentList, id, clusterID } = newV.from
-          this.from = Object.assign(this.from, { name, value, description, type, parentAuthorityID, id, clusterID })
+          const { name, value, description, type, parentMenuID, parentList, id, clusterID } = newV.from
+          this.from = Object.assign(this.from, { name, value, description, type, parentMenuID, id, clusterID })
           if (parentList) {
             this.from.parentList = parentList.split(',')
           }
@@ -136,7 +136,7 @@ export default {
         value: '',
         description: '',
         type: '',
-        parentAuthorityID: '',
+        parentMenuID: '',
         parentList: []
       }
     },
@@ -148,7 +148,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const data = JSON.parse(JSON.stringify(this.from))
-          data.parentAuthorityID = data.parentList[this.from.parentList.length - 1]
+          data.parentMenuID = data.parentList[this.from.parentList.length - 1]
           if (data.parentList && data.parentList.length) {
             let sum = ''
 

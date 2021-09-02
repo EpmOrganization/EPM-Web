@@ -8,12 +8,13 @@
     >
       添加菜单
     </el-button>
+    <!--tree-props 表示绑定的子级-->
     <div class="contant">
       <el-table
         :data="treedata"
         style="width: 100%;"
         row-key="id"
-        :tree-props="{children: 'children', }"
+        :tree-props="{children: 'childrenMenu', }"
       >
         <el-table-column
           prop="name"

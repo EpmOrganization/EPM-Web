@@ -33,7 +33,8 @@ export const businessRoutes = [
     path: '/system',
     component: Layout,
     meta: { title: '系统管理', icon: 'el-icon-s-tools' },
-    redirect: '/systemlist',
+    // 默认跳转到部门管理页面
+    redirect: '/deptlist',
     children: [
       {
         path: 'deptlist',
@@ -52,8 +53,42 @@ export const businessRoutes = [
         name: 'menulist',
         component: () => import('@/views/system/menu/list'),
         meta: { title: '菜单管理' }
+      },
+      {
+        path: 'rolelist',
+        name: 'rolelist',
+        component: () => import('@/views/system/role/list'),
+        meta: { title: '角色管理' }
+      },
+      // 新增角色
+      {
+        path: 'roleadd',
+        name: 'roleadd',
+        component: () => import('@/views/system/role/add'),
+        meta: { title: '新增角色' },
+        hidden: true
+      },
+      // 编辑角色
+      {
+        path: 'roleedit',
+        name: 'roleedit',
+        component: () => import('@/views/system/role/add'),
+        meta: { title: '角色编辑' },
+        hidden: true
       }
     ]
+  },
+  {
+    path: '/work',
+    component: Layout,
+    meta: { title: '工作记录管理', icon: 'el-icon-s-tools' },
+    redirect: '/working',
+    children: [{
+      path: 'working',
+      name: 'working',
+      component: () => import('@/views/work/working'),
+      meta: { title: '工作记录' }
+    }]
   }
 ]
 
