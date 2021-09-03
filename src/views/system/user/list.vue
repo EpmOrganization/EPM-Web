@@ -147,17 +147,17 @@ export default {
             type: 'primary'
             // role: 'roleedit'
           },
-          {
-            name: '设置数据权限',
-            type: 'primary',
-            event: this.datarole
-            // role: 'roleedit'
-          },
-          {
-            name: '重置密码',
-            type: 'primary',
-            event: this.resetpass
-          },
+          //   {
+          //     // name: '设置数据权限',
+          //     // type: 'primary',
+          //     // event: this.datarole
+          //     // role: 'roleedit'
+          //   },
+          //   {
+          //     name: '重置密码',
+          //     type: 'primary',
+          //     event: this.resetpass
+          //   },
           {
             name: '删除',
             type: 'danger',

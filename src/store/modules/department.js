@@ -51,33 +51,6 @@ const actions = {
       })
     })
   },
-  //   department_depdel({ commit }, id) {
-  //     return new Promise((resolve, reject) => {
-  //       department_depdel(id).then(response => {
-  //         resolve(response)
-  //       }).catch(error => {
-  //         reject(error)
-  //       })
-  //     })
-  //   },
-  //   department_depedit({ commit }, data) {
-  //     return new Promise((resolve, reject) => {
-  //       department_depedit(data).then(response => {
-  //         resolve(response)
-  //       }).catch(error => {
-  //         reject(error)
-  //       })
-  //     })
-  //   },
-  //   department_adddep({ commit }, data) {
-  //     return new Promise((resolve, reject) => {
-  //       department_adddep(data).then(response => {
-  //         resolve(response)
-  //       }).catch(error => {
-  //         reject(error)
-  //       })
-  //     })
-  //   },
   department_GetList({ commit }, data) {
     return new Promise((resolve, reject) => {
       department_GetList(data).then(response => {

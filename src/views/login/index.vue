@@ -90,14 +90,14 @@ export default {
 
   methods: {
     // 引入store下user模块下面的login方法
-    ...mapActions('user', ['login']),
+    ...mapActions('user', ['login', 'getrole', 'userinfo', 'setfun']),
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
           // 调用store下user模块里面的login方法
           this.login(this.loginForm).then(() => {
-            // this.role()
+            this.role()
             // 登录成功，跳转到首页
             this.$router.push({ path: '/' })
           }).catch(() => {
@@ -106,6 +106,49 @@ export default {
         } else {
           return false
         }
+      })
+    },
+    async getuserinfo() {
+      await this.userinfo()
+    },
+    // 获取角色对应权限
+    role() {
+      this.getrole().then(() => {
+        this.getuserinfo()
+        const fnlist = []
+        this.$store.state.user.role.map(item => {
+          if (item.type !== 1) {
+            fnlist.push(item)
+          }
+        })
+        const parentid = fnlist.map(item => {
+          return item.parentMenuID
+        })
+        const parentidlist = [...new Set(parentid)]
+        // 计算带有方法的路由
+        const funrouter = []
+        parentidlist.map(v => {
+          this.$store.state.user.role.map(s => {
+            if (s.id === v) {
+              const o = {}
+              o.path = s.value
+              o.id = s.id
+              funrouter.push(o)
+            }
+          })
+        })
+        funrouter.map(s => {
+          s.funlist = fnlist.filter(v => {
+            if (v.parentMenuID === s.id) {
+              return v.value
+            }
+          })
+        })
+        this.setfun(funrouter).then(() => {
+          this.$router.push({ path: '/' })
+        })
+      }).catch(() => {
+        this.loading = false
       })
     }
   }

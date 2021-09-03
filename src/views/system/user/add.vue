@@ -8,9 +8,9 @@
   >
     <div v-loading="loading" class="contant">
       <el-form ref="from" :model="from" :rules="rules" label-width="90px" class="demo-ruleForm">
-        <el-form-item label="用户账号" prop="loginID">
+        <el-form-item label="用户账号" prop="loginName">
           <el-col :span="22">
-            <el-input v-model="from.loginID" :disabled="from.id?true:false" />
+            <el-input v-model="from.loginName" :disabled="from.id?true:false" />
           </el-col>
         </el-form-item>
         <el-form-item label="密码" prop="password">
@@ -38,18 +38,6 @@
             <el-input v-model="from.emailAddress" />
           </el-col>
         </el-form-item>
-        <!-- <el-form-item label="职务" prop="position">
-          <el-col :span="22">
-            <el-input v-model="from.position" />
-          </el-col>
-        </el-form-item> -->
-        <!-- <el-form-item label="事业部" prop="divisionID">
-          <el-col :span="22">
-            <el-select v-model="from.divisionID" placeholder="请选择" @change="sybchange(from.divisionID)">
-              <el-option v-for="item in syblist" :key="item.id" :label="item.divisionName" :value="item.id" />
-            </el-select>
-          </el-col>
-        </el-form-item> -->
         <el-form-item label="部门">
           <el-col :span="22">
             <el-cascader
@@ -60,9 +48,9 @@
             />
           </el-col>
         </el-form-item>
-        <el-form-item label="角色" prop="actionAuthorityGroupID">
+        <el-form-item label="角色" prop="roleID">
           <el-col :span="22">
-            <el-select v-model="from.actionAuthorityGroupID" placeholder="请选择">
+            <el-select v-model="from.roleID" placeholder="请选择">
               <el-option v-for="item in roledara" :key="item.id" :label="item.name" :value="item.id" />
             </el-select>
           </el-col>
@@ -96,17 +84,18 @@ export default {
     }
   },
   data() {
-    const validatePhone = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入手机号'))
-      } else {
-        if (!/^1[3456789]\d{9}$/.test(value)) {
-          callback(new Error('请输入正确的手机号'))
-        } else {
-          callback()
-        }
-      }
-    }
+    // 验证手机号码
+    // const validatePhone = (rule, value, callback) => {
+    //   if (value === '') {
+    //     callback(new Error('请输入手机号'))
+    //   } else {
+    //     if (!/^1[3456789]\d{9}$/.test(value)) {
+    //       callback(new Error('请输入正确的手机号'))
+    //     } else {
+    //       callback()
+    //     }
+    //   }
+    // }
     return {
       api: 'user',
       from: {
@@ -119,14 +108,14 @@ export default {
         position: '', // 职务
         dep: [], // 记录部门数组
         departmentID: '', // 部门ID
-        RoleID: '', // 角色ID
+        roleID: '', // 角色ID
         status: 0
       },
       // 验证规则
       rules: {
         loginName: [{ required: true, message: '请输入用户账号', trigger: 'blur' }],
         name: [{ required: true, message: '请输入用户姓名', trigger: 'blur' }],
-        mobileNumber: [{ required: true, message: '请输入手机号', trigger: 'blur' }, { validator: validatePhone, trigger: 'blur' }],
+        // mobileNumber: [{ required: true, message: '请输入手机号', trigger: 'blur' }, { validator: validatePhone, trigger: 'blur' }],
         RoleID: [{ required: true, message: '请选择用户角色', trigger: 'blur' }],
         dep: [{ required: true, message: '请选择用户部门', trigger: 'blur' }],
         password: [{ required: true, message: '请输入用户密码', trigger: 'blur' }]
@@ -175,18 +164,18 @@ export default {
           const data = JSON.parse(JSON.stringify(this.from))
           console.log(data)
           if (data.dep && data.dep.length > 0) {
-            data.userGroupID = data.dep[data.dep.length - 1]
+            data.departmentID = data.dep[data.dep.length - 1]
           } else {
-            data.userGroupID = null
+            data.departmentID = null
           }
-          data.dep = JSON.stringify(data.dep)
-          if (!data.divisionID) {
-            delete data.divisionID
-          }
+          //   data.dep = JSON.stringify(data.dep)
+          //   if (!data.divisionID) {
+          //     delete data.divisionID
+          //   }
           this[this.api](data).then(res => {
-            if (res.resultCode === 1) {
+            if (res.code === 1) {
               this.$message({
-                message: res.resultMsg,
+                message: res.msg,
                 type: 'success'
               })
               this.$emit('close', true)

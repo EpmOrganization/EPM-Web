@@ -69,14 +69,14 @@ export default {
     if (this.prop.data) {
       this.from = this.prop.data
       this.from.dep = JSON.parse(this.prop.data.dep) || []
-      this.api = 'department_depedit'
+      this.api = 'department_edit'
     }
     this.OrganizationalStructure().then(res => {
       this.treedata = res
     })
   },
   methods: {
-    ...mapActions('department', ['department_add', 'department_depedit', 'OrganizationalStructure']),
+    ...mapActions('department', ['department_add', 'department_edit', 'OrganizationalStructure']),
     // 提交
     submit(formName) {
       this.$refs[formName].validate((valid) => {

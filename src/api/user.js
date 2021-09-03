@@ -16,3 +16,18 @@ export function userinfo() {
     method: 'get'
   })
 }
+
+export function user(data) {
+  return request({
+    url: '/api/user',
+    method: 'post',
+    data
+  })
+}
+
+export function getrole() {
+  return request({
+    url: '/api/menu/GetAuthorize',
+    method: 'get'
+  })
+}
