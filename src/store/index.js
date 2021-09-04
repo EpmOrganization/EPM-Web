@@ -7,6 +7,7 @@ import settings from './modules/settings'
 import app from './modules/app'
 import menu from './modules/menu'
 import role from './modules/role'
+import workItem from './modules/workItem'
 
 Vue.use(Vuex)
 const store = new Vuex.Store({
@@ -16,7 +17,8 @@ const store = new Vuex.Store({
     settings,
     app,
     menu,
-    role
+    role,
+    workItem
   },
   getters
 })
