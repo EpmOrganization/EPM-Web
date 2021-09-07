@@ -40,7 +40,9 @@ export default {
   },
   data() {
     return {
+      api: 'workItem_add',
       from: {
+        id: '',
         recordDate: '',
         workContent: '',
         description: '' // 备注信息
@@ -51,42 +53,23 @@ export default {
       }
     }
   },
-  //   async created() {
-  //     // this.loading = true
-  //     // const role_tree = await this.role_tree() // 角色
-  //     // const data = await this.OrganizationalStructure()
-  //     // this.depdata = data
-  //     // this.roledara = role_tree
-
-  //     // if (this.prop.id) {
-  //     //   this.getDetail(this.prop.id).then(res => {
-  //     //     this.from = Object.assign(this.from, res.data)
-  //     //     this.from.dep = JSON.parse(this.from.dep)
-  //     //   })
-  //     //   // this.sybchange(this.prop.data.divisionID)
-  //     //   this.api = 'user_edit'
-  //     // } else {
-  //     //   this.api = 'user'
-  //     //   // 自动创建密码
-  //     // //   this.AutoCreatePwd().then(res => {
-  //     // //     this.from.password = res.data
-  //     // //   })
-  //     // }
-  //     this.loading = false
-  //   },
+  async created() {
+    if (this.prop.data) {
+      this.api = 'workItem_edit'
+      console.log(this.prop.data)
+      this.from.workContent = this.prop.data.workContent
+      this.from.description = this.prop.data.description
+      this.from.id = this.prop.data.id
+    }
+  },
   methods: {
     ...mapActions('workItem', ['workItem_add', 'workItem_edit']),
     submitForm(formName) {
-      alert('提交')
-      alert(this.prop.recordDate)
-      console.log(this.prop.recordDate)
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.from.recordDate = this.prop.recordDate
           const data = JSON.parse(JSON.stringify(this.from))
-          console.log(data)
-
-          this.workItem_add(data).then(res => {
+          this[this.api](data).then(res => {
             if (res.code === 1) {
               this.$message({
                 message: res.msg,

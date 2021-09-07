@@ -5,7 +5,7 @@ import axios from 'axios'
 // MessageBox
 import { Message } from 'element-ui'
 import store from '@/store'
-// import { getToken, setToken } from '@/utils/auth'
+import { getToken } from '@/utils/authentication'
 import router from '@/router'
 // import domMessage from './messageOnce'
 // create an axios instance
@@ -32,9 +32,10 @@ service.interceptors.request.use(
     // do something before request is sent
     config.headers['Access-Control-Allow-Origin'] = '*'
     // console.log('store.getters.token:' + store.getters.token)
-    // if (store.getters.token) {
-    //   config.headers['Authorization'] = `Bearer ${getToken()}`
-    // }
+    if (store.getters.token) {
+      // header里面添加token传递给后端
+      config.headers['Authorization'] = `Bearer ${getToken()}`
+    }
 
     return config
   },

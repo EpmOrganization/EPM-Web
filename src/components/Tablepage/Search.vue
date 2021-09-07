@@ -131,7 +131,8 @@
             v-model="searchform[input.model]"
             type="month"
             :placeholder="input.label"
-            value-format="yyyy-MM"
+            value-format="MM"
+            @change="MonthChange"
           />
           <el-date-picker
             v-if="input.type=='dismonth'"
@@ -147,6 +148,7 @@
             type="year"
             :placeholder="input.label"
             value-format="yyyy"
+            @change="YearChange"
           />
 
           <el-date-picker
@@ -204,7 +206,7 @@
             value-format="yyyy-MM-dd HH:mm:ss"
           />
         </el-form-item>
-        <el-form-item v-if="isShowSubmit">
+        <!-- <el-form-item v-if="isShowSubmit">
           <el-button
             type="primary"
 
@@ -212,14 +214,14 @@
           >
             查询
           </el-button>
-        </el-form-item>
-        <el-form-item v-if="isShowSubmit">
+        </el-form-item> -->
+        <!-- <el-form-item v-if="isShowSubmit">
           <el-button
             @click="resetForm()"
           >
             重置
           </el-button>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item class="right">
           <!-- eslint-disable-next-line max-len -->
           <el-button
@@ -366,6 +368,12 @@ export default {
     },
     resetForm() {
       this.searchform = this._searchform() || {}
+      this.onSubmit()
+    },
+    YearChange() {
+      this.onSubmit()
+    },
+    MonthChange() {
       this.onSubmit()
     },
     onSubmit() {

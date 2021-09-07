@@ -9,7 +9,6 @@ export function getToken() {
 }
 // 设置token
 export function setToken(token) {
-  console.log('token123123123:' + token)
   return Cookies.set(AccessTokenKey, token)
 }
 // 移除token

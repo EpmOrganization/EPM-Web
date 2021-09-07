@@ -10,26 +10,6 @@
     >
       添加工作记录
     </el-button> -->
-    <div class="container">
-      <div class="block">
-        <span class="demonstration">年</span>
-        <el-date-picker
-          v-model="value3"
-          type="year"
-          placeholder="选择年"
-          :change="YearChange"
-        />
-      </div>
-      <div class="block">
-        <span class="demonstration">月</span>
-        <el-date-picker
-          v-model="value2"
-          type="month"
-          placeholder="选择月"
-        />
-      </div>
-    </div>
-
     <add v-if="addprop.dialogVisible" :prop="addprop" @close="close" />
     <table-page
       ref="tabepage"
@@ -53,72 +33,48 @@ export default {
       action: '/api/workitem/getlist',
       table: {
         recordDate: '日期',
-        // recordDate_width: '150px',
+        recordDate_width: '150px',
         workContent: '工作记录',
         // workContent_width: '200px',
         description: '备注',
         // description_width: '100px',
 
-        createTime: '首次创建时间',
+        createTime: '创建时间',
         createTime_width: '150px',
         createUser: '创建人',
         createUser_width: '150px',
 
         options: [
           {
+            name: '新增',
+            type: 'success',
+            event: this.add,
+            filter: {
+              isRecord: [0]
+            }
+          },
+          {
             name: '编辑',
             type: 'primary',
-            event: this.edit
+            event: this.edit,
+            filter: {
+              isRecord: [1]
+            }
           }
         ],
-        options_width: '100px'
+        options_width: '200px'
       },
       search: {
         Year: {
-          type: 'select',
+          type: 'year',
           label: '年',
-          options: [
-            {
-              label: '2021',
-              value: 2021
-            },
-            {
-              label: '2020',
-              value: 2020
-            },
-            {
-              label: '2019',
-              value: 2019
-            }
-          ]
+          default: ''
         },
         Month: {
-          type: 'select',
+          type: 'month',
           label: '月',
-          options: [
-            {
-              label: '1',
-              value: 1
-            },
-            {
-              label: '2',
-              value: 2
-            },
-            {
-              label: '3',
-              value: 3
-            },
-            {
-              label: '4',
-              value: 4
-            },
-            {
-              label: '5',
-              value: 5
-            }
-          ]
+          default: ''
         }
-
       },
       addprop: {
         dialogVisible: false,
@@ -131,6 +87,11 @@ export default {
       }
     }
   },
+  created() {
+    const date = new Date()
+    this.search.Year.default = date.getFullYear().toString()
+    this.search.Month.default = (date.getMonth() + 1).toString()
+  },
   methods: {
     ...mapActions('workItem', ['getlist', 'workitem_add', 'workitem_edit']),
     updatalist() {
@@ -141,8 +102,9 @@ export default {
       alert('Year:' + this.value3)
     },
     // 新增工作记录
-    add() {
+    add({ row }) {
       this.addprop = {
+        recordDate: row.recordDate,
         dialogVisible: true,
         title: '新增工作记录'
       }
@@ -152,40 +114,30 @@ export default {
         id: row.id,
         applyDescription: ''
       }
-      // this.dialogVisible = true
     },
     edit({ row }) {
-      // const { adjustType } = row
-      const data = JSON.parse(JSON.stringify(row))
-      console.log(data)
-      // if (adjustType === 0) {
-      //   this.quantityprop = {
-      //     title: '编辑量差调整',
-      //     data,
-      //     dialogVisible: true
-      //   }
-      // } else if (adjustType === 1) {
-      //   this.minpriceprop = {
-      //     title: '编辑价差调整',
-      //     data,
-      //     dialogVisible: true
-      //   }
-      // } else if (adjustType === 2) {
-      //   this.balanceprop = {
-      //     title: '编辑余额调整',
-      //     data,
-      //     dialogVisible: true
-      //   }
+      // const data = JSON.parse(JSON.stringify(row))
+      // this.addprop = {
+      //   recordDate: row.recordDate,
+      //   dialogVisible: true,
+      //   title: '编辑工作记录'
       // }
-      alert('编辑')
+
+      const { workContent, description, id } = row
+      const data = {
+        workContent,
+        description,
+        id
+      }
       this.addprop = {
-        recordDate: row.recordDate,
-        dialogVisible: true,
-        title: '编辑工作记录'
+        title: '编辑工作记录',
+        data,
+        dialogVisible: true
       }
     },
     close() {
       this.addprop.dialogVisible = false
+      this.updatalist()
     },
     submit() {
       this.AdjustingOrder_Submit(this.submitfrom).then(res => {
@@ -194,7 +146,6 @@ export default {
           type: 'success'
         })
         this.updatalist()
-        // this.dialogVisible = false
       })
     }
   }
