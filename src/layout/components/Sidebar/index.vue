@@ -40,42 +40,42 @@ export default {
     routes() {
       const options = JSON.parse(JSON.stringify(this.$router.options.routes))
       // 注释掉的是动态获取权限
-      //   const hblist = []
+      const hblist = []
 
-      //   const ywlist = options.filter(item => {
-      //     if (!item.hidden && item.path !== '/') {
-      //       return item
-      //     } else {
-      //       hblist.push(item)
-      //     }
-      //   })
+      const ywlist = options.filter(item => {
+        if (!item.hidden && item.path !== '/') {
+          return item
+        } else {
+          hblist.push(item)
+        }
+      })
 
-      //   // 菜单权限
-      //   const rolelist = []
-      //   this.$store.state.user.role.map(v => {
-      //     if (v.type === 1) {
-      //       rolelist.push(v.value)
-      //     }
-      //   })
-      //   const filterrole = function(arr, path) {
-      //     arr.map((item, index) => {
-      //       if (path) {
-      //         if (!rolelist.includes(path + '/' + item.path)) {
-      //           item.hidden = true
-      //         }
-      //       } else {
-      //         if (!rolelist.includes(item.path)) {
-      //           item.hidden = true
-      //         }
-      //       }
-      //       if (item.children && item.children.length) {
-      //         filterrole(item.children, item.path)
-      //       }
-      //     })
-      //   }
-      //   filterrole(ywlist, false)
-      //   return [...hblist, ...ywlist]
-      return options
+      // 菜单权限
+      const rolelist = []
+      this.$store.state.user.role.map(v => {
+        if (v.type === 1) {
+          rolelist.push(v.value)
+        }
+      })
+      const filterrole = function(arr, path) {
+        arr.map((item, index) => {
+          if (path) {
+            if (!rolelist.includes(path + '/' + item.path)) {
+              item.hidden = true
+            }
+          } else {
+            if (!rolelist.includes(item.path)) {
+              item.hidden = true
+            }
+          }
+          if (item.children && item.children.length) {
+            filterrole(item.children, item.path)
+          }
+        })
+      }
+      filterrole(ywlist, false)
+      return [...hblist, ...ywlist]
+      // return options
     },
     activeMenu() {
       const route = this.$route

@@ -1,8 +1,9 @@
 // 引入api下的user
-import { login, userinfo, user, getrole } from '@/api/user'
+import { login, userinfo, user, getrole, logout } from '@/api/user'
 // 引入身份认证，操作token
-import { setToken, getToken } from '@/utils/authentication'
+import { setToken, getToken, removeToken } from '@/utils/authentication'
 import sessionStorage from '@/utils/sessionStorage'
+import { resetRouter } from '@/router'
 import router from '@/router'
 
 const getDefaultState = () => {
@@ -78,6 +79,20 @@ const actions = {
         const { data } = response
         sessionStorage.set('role', data)
         commit('SET_ROLE', data)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  // user logout
+  logout({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      logout(state.token).then(() => {
+        removeToken() // must remove  token  first
+        resetRouter()
+        sessionStorage.clear()
+        commit('RESET_STATE')
         resolve()
       }).catch(error => {
         reject(error)

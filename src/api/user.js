@@ -31,3 +31,10 @@ export function getrole() {
     method: 'get'
   })
 }
+
+export function logout() {
+  return request({
+    url: '/api/logOut',
+    method: 'post'
+  })
+}

@@ -53,11 +53,11 @@ export default {
       action: '/api/workitem/getlist',
       table: {
         recordDate: '日期',
-        recordDate_width: '150px',
+        // recordDate_width: '150px',
         workContent: '工作记录',
-        workContent_width: '200px',
+        // workContent_width: '200px',
         description: '备注',
-        description_width: '100px',
+        // description_width: '100px',
 
         createTime: '首次创建时间',
         createTime_width: '150px',
