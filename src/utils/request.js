@@ -5,13 +5,13 @@ import axios from 'axios'
 // MessageBox
 import { Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/authentication'
+import { getToken, setToken } from '@/utils/authentication'
 import router from '@/router'
-// import domMessage from './messageOnce'
+import domMessage from './messageOnce'
 // create an axios instance
 
 // eslint-disable-next-line new-cap
-// const messageOnce = new domMessage()
+const messageOnce = new domMessage()
 
 const service = axios.create({
   baseURL: '', // url = base url + request url // url = base url + request url
@@ -104,14 +104,14 @@ service.interceptors.response.use(
       return false
     } else if (status === 401) {
       store.state.isLogin = false
-      //   setToken('')
-      //   messageOnce.error({
-      //     message: '登录超时，请重新登录',
-      //     type: 'error',
-      //     duration: 5 * 1000
-      //   })
+      setToken('')
+      messageOnce.error({
+        message: '登录超时，请重新登录',
+        type: 'error',
+        duration: 5 * 1000
+      })
       router.push({ path: '/login' })
-      // location.reload()
+      location.reload()
       return false
     } else {
       Message({

@@ -1,5 +1,15 @@
 <template>
   <div>
+    <!--添加按钮-->
+    <!-- <el-button
+      type="primary"
+      class="mb10"
+      icon="el-icon-plus"
+      :path="$route.path"
+      @click="add"
+    >
+      添加工作记录
+    </el-button> -->
     <add v-if="addprop.dialogVisible" :prop="addprop" @close="close" />
     <table-page
       ref="tabepage"
@@ -32,29 +42,61 @@ export default {
         createTime: '创建时间',
         createTime_width: '150px',
         createUser: '创建人',
-        createUser_width: '150px',
+        createUser_width: '150px'
 
-        options: [
-          {
-            name: '新增',
-            type: 'success',
-            event: this.add,
-            filter: {
-              isRecord: [0]
-            }
-          },
-          {
-            name: '编辑',
-            type: 'primary',
-            event: this.edit,
-            filter: {
-              isRecord: [1]
-            }
-          }
-        ],
-        options_width: '200px'
+        // options: [
+        //   {
+        //     name: '新增',
+        //     type: 'success',
+        //     event: this.add,
+        //     filter: {
+        //       isRecord: [0]
+        //     }
+        //   },
+        //   {
+        //     name: '编辑',
+        //     type: 'primary',
+        //     event: this.edit,
+        //     filter: {
+        //       isRecord: [1]
+        //     }
+        //   }
+        // ],
+        // options_width: '200px'
       },
       search: {
+        dept: {
+          type: 'select',
+          label: '部门',
+          options: [
+            {
+              label: '普通客户',
+              value: '普通客户'
+            },
+            {
+              label: '渠道客户',
+              value: '渠道客户'
+            },
+            {
+              label: '集团公司',
+              value: '集团公司'
+            }
+          ]
+        },
+        user: {
+          type: 'select',
+          label: '员工姓名',
+          options: [
+            {
+              label: '张三',
+              value: '张三'
+            },
+            {
+              label: '李四',
+              value: '李四'
+            }
+          ]
+        },
         Year: {
           type: 'year',
           label: '年',
@@ -94,8 +136,7 @@ export default {
     // 新增工作记录
     add({ row }) {
       this.addprop = {
-        data: row,
-        type: 'add',
+        recordDate: row.recordDate,
         dialogVisible: true,
         title: '新增工作记录'
       }

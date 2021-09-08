@@ -43,7 +43,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       // 这里的login是调用api下user里面的login方法
       login(userInfo).then(response => {
-        console.log('newtoken:' + response.data)
+        // console.log('newtoken:' + response.data)
         commit('SET_TOKEN', response.data)
         setToken(response.data)
         resolve()

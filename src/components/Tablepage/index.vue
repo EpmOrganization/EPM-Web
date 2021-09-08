@@ -607,7 +607,6 @@ export default {
         method: 'post',
         data: search
       }).then(res => {
-        console.log(res)
         this.loading = 0
         if (res && res.code === 1) {
           if (this.datakey) {

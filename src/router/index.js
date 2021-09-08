@@ -37,7 +37,8 @@ export const businessRoutes = [
     children: [{
       path: 'home',
       name: 'Home',
-      component: () => import('@/views/home/index'),
+      // component: () => import('@/views/home/index'),
+      component: () => import('@/views/home/test'),
       meta: { title: '我的工作台', icon: 'el-icon-s-home' }
     }]
   },
@@ -95,12 +96,20 @@ export const businessRoutes = [
     component: Layout,
     meta: { title: '工作记录管理', icon: 'el-icon-s-tools' },
     redirect: '/working',
-    children: [{
-      path: 'working',
-      name: 'working',
-      component: () => import('@/views/work/working'),
-      meta: { title: '工作记录' }
-    }]
+    children: [
+      {
+        path: 'working',
+        name: 'working',
+        component: () => import('@/views/work/working'),
+        meta: { title: '工作记录' }
+      },
+      {
+        path: 'authworking',
+        name: 'authworking',
+        component: () => import('@/views/work/authworking.vue'),
+        meta: { title: '部门工作记录' }
+      }
+    ]
   }
 ]
 

@@ -55,7 +55,7 @@ export default {
     }
   },
   created() {
-    console.log(this.$route.path)
+    // console.log(this.$route.path)
   },
   methods: {
     ...mapActions('role', ['role', 'role_del']),

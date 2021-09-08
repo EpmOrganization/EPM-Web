@@ -11,7 +11,10 @@ import '@/styles/index.scss'
 import '@/permission'
 import TablePage from '@/components/Tablepage/index'
 
+import XChart from '@/components/XChart.vue'
+
 Vue.component('TablePage', TablePage)
+Vue.component('XChart', XChart)
 Vue.use(ElementUI, { size: 'small' })
 Vue.config.productionTip = false
 

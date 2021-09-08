@@ -51,7 +51,7 @@ export default {
       } else {
         this.changeTitle(true)
       }
-      console.log(this.$store)
+      // console.log(this.$store)
     }
   },
   methods: {

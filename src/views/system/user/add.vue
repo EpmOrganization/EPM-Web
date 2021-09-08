@@ -162,7 +162,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const data = JSON.parse(JSON.stringify(this.from))
-          console.log(data)
+          // console.log(data)
           if (data.dep && data.dep.length > 0) {
             data.departmentID = data.dep[data.dep.length - 1]
           } else {
