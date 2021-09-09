@@ -59,3 +59,10 @@ export function department_GetList() {
     data
   })
 }
+
+export function getdept() {
+  return request({
+    url: '/api/department/getdept',
+    method: 'get'
+  })
+}

@@ -69,18 +69,18 @@ export default {
           type: 'select',
           label: '部门',
           options: [
-            {
-              label: '普通客户',
-              value: '普通客户'
-            },
-            {
-              label: '渠道客户',
-              value: '渠道客户'
-            },
-            {
-              label: '集团公司',
-              value: '集团公司'
-            }
+            // {
+            //   label: '普通客户',
+            //   value: '普通客户'
+            // },
+            // {
+            //   label: '渠道客户',
+            //   value: '渠道客户'
+            // },
+            // {
+            //   label: '集团公司',
+            //   value: '集团公司'
+            // }
           ]
         },
         user: {
@@ -119,13 +119,19 @@ export default {
       }
     }
   },
-  created() {
+  async created() {
     const date = new Date()
     this.search.Year.default = date.getFullYear().toString()
     this.search.Month.default = (date.getMonth() + 1).toString()
+
+    // 从后端接口获取数据  ES6中解构
+    const { data } = await this.getdept()
+    this.search.dept.options = data
+    console.log(this.search.dept.options)
   },
   methods: {
     ...mapActions('workItem', ['getlist', 'workitem_add', 'workitem_edit']),
+    ...mapActions('department', ['getdept']),
     updatalist() {
       this.$refs.tabepage.getData()
     },

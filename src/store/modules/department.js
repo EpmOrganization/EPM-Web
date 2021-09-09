@@ -1,5 +1,5 @@
 
-import { department_tree, department_add, department_edit, department_del, department_GetList, OrganizationalStructure } from '@/api/department.js'
+import { department_tree, department_add, department_edit, department_del, department_GetList, OrganizationalStructure, getdept } from '@/api/department.js'
 
 const actions = {
   // 获取部门树形结构
@@ -54,6 +54,16 @@ const actions = {
   department_GetList({ commit }, data) {
     return new Promise((resolve, reject) => {
       department_GetList(data).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  getdept({ commit }) {
+    return new Promise((resolve, reject) => {
+      getdept().then(response => {
         resolve(response)
       }).catch(error => {
         reject(error)

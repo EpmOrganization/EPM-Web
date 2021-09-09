@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div>
+    <!-- <div>
       324234234
-    </div>
+    </div> -->
     <!-- 图表位置 -->
-    <x-chart v-if="chartsOptions.style.height " v-show="chartsOptions.series[0].data.length>0" id="charts" ref="charts" type="chart" :option="chartsOptions" />
+    <x-chart id="charts" ref="charts" type="chart" :option="chartsOptions" />
   </div>
 </template>
 
@@ -95,48 +95,49 @@ export default {
         series: [{
           type: 'area',
           name: '耗用量',
-          data: [{
-            name: 'Chrome',
-            y: 61.41,
-            sliced: true,
-            selected: true
-          }, {
-            name: 'Internet Explorer',
-            y: 11.84
-          }, {
-            name: 'Firefox',
-            y: 10.85
-          }, {
-            name: 'Edge',
-            y: 4.67
-          }, {
-            name: 'Safari',
-            y: 4.18
-          }, {
-            name: 'Sogou Explorer',
-            y: 1.64
-          }, {
-            name: 'Opera',
-            y: 1.6
-          }, {
-            name: 'QQ',
-            y: 1.2
-          }, {
-            name: 'Other',
-            y: 2.61
-          }]
+          data: [
+            {
+              name: 'Chrome',
+              y: 61.41,
+              sliced: true,
+              selected: true
+            }, {
+              name: 'Internet Explorer',
+              y: 11.84
+            }, {
+              name: 'Firefox',
+              y: 10.85
+            }, {
+              name: 'Edge',
+              y: 4.67
+            }, {
+              name: 'Safari',
+              y: 4.18
+            }, {
+              name: 'Sogou Explorer',
+              y: 1.64
+            }, {
+              name: 'Opera',
+              y: 1.6
+            }, {
+              name: 'QQ',
+              y: 1.2
+            }, {
+              name: 'Other',
+              y: 2.61
+            }]
         }]
       }
     }
-  },
-  mounted() {
-    this.chartsOptions.style.height = document.body.clientHeight - this.$refs.SearchArea.offsetHeight - 100 + 'px'
-    window.onresize = () => {
-      return (() => {
-        this.chartsOptions.style.height = document.body.clientHeight - this.$refs.SearchArea.offsetHeight - 100 + 'px'
-      })()
-    }
   }
+//   mounted() {
+//     this.chartsOptions.style.height = document.body.clientHeight - this.$refs.SearchArea.offsetHeight - 100 + 'px'
+//     window.onresize = () => {
+//       return (() => {
+//         this.chartsOptions.style.height = document.body.clientHeight - this.$refs.SearchArea.offsetHeight - 100 + 'px'
+//       })()
+//     }
+//   }
 //   methods: {
 //     ...mapActions('reports', ['GetCustomerUsedTrend']),
 //     removetime() {
