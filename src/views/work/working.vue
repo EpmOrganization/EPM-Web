@@ -17,8 +17,6 @@ export default {
   components: { add },
   data() {
     return {
-      value3: '',
-      value2: '',
       processVisible: false,
       action: '/api/workitem/getlist',
       table: {
@@ -55,41 +53,34 @@ export default {
         options_width: '200px'
       },
       search: {
-        Year: {
-          type: 'year',
-          label: '年',
-          default: ''
-        },
-        Month: {
+        // Year: {
+        //   type: 'year',
+        //   label: '年',
+        //   default: ''
+        // },
+        SelectedDate: {
           type: 'month',
-          label: '月',
-          default: ''
+          label: '日期',
+          default: '2021-09'
         }
       },
       addprop: {
         dialogVisible: false,
         title: '用户新增',
         id: null
-      },
-      fileList: [],
-      submitfrom: {
-        applyDescription: ''
       }
     }
   },
   created() {
-    const date = new Date()
-    this.search.Year.default = date.getFullYear().toString()
-    this.search.Month.default = (date.getMonth() + 1).toString()
+    // // 给年和月控件赋值
+    // const date = new Date()
+    // // this.search.Year.default = date.getFullYear().toString()
+    // this.search.Month.default = (date.getMonth() + 1).toString()
   },
   methods: {
     ...mapActions('workItem', ['getlist', 'workitem_add', 'workitem_edit']),
     updatalist() {
       this.$refs.tabepage.getData()
-    },
-    // 年选择改变事件
-    YearChange() {
-      alert('Year:' + this.value3)
     },
     // 新增工作记录
     add({ row }) {
@@ -100,12 +91,7 @@ export default {
         title: '新增工作记录'
       }
     },
-    sub({ row }) {
-      this.submitfrom = {
-        id: row.id,
-        applyDescription: ''
-      }
-    },
+    // 编辑工作记录
     edit({ row }) {
       const { workContent, description, id } = row
       const data = {
@@ -122,15 +108,6 @@ export default {
     close() {
       this.addprop.dialogVisible = false
       this.updatalist()
-    },
-    submit() {
-      this.AdjustingOrder_Submit(this.submitfrom).then(res => {
-        this.$message({
-          message: res.msg,
-          type: 'success'
-        })
-        this.updatalist()
-      })
     }
   }
 }

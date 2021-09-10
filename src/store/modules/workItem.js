@@ -2,11 +2,12 @@ import { getlist, workItem_add, workItem_edit } from '@/api/workItem'
 
 const actions = {
   // 获取树形结构
-  getlist() {
+  getlist({ commit }, data) {
     return new Promise((resolve, reject) => {
-      getlist().then(response => {
-        const { data } = response
-        resolve(data)
+      getlist(data).then(response => {
+        // const { data } = response
+        // resolve(data)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })

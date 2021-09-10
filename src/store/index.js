@@ -8,6 +8,7 @@ import app from './modules/app'
 import menu from './modules/menu'
 import role from './modules/role'
 import workItem from './modules/workItem'
+import dataauthority from './modules/dataauthority'
 
 Vue.use(Vuex)
 const store = new Vuex.Store({
@@ -18,7 +19,8 @@ const store = new Vuex.Store({
     app,
     menu,
     role,
-    workItem
+    workItem,
+    dataauthority
   },
   getters
 })

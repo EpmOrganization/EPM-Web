@@ -401,9 +401,14 @@ export default {
         }
       })()
     }
+    if (this.issearch) {
+      this.getData(JSON.parse(JSON.stringify(this.$refs.search.searchform)))
+    } else {
+      this.getData()
+    }
   },
   created() {
-    this.getData()
+
   },
   methods: {
     typeOne(th, thkey) {

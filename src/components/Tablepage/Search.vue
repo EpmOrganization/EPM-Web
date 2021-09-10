@@ -116,6 +116,7 @@
             :props="input.props"
             clearable
             :show-all-levels="false"
+            @change="MonthChange"
           />
 
           <el-date-picker
@@ -131,7 +132,7 @@
             v-model="searchform[input.model]"
             type="month"
             :placeholder="input.label"
-            value-format="MM"
+            value-format="yyyy-MM"
             @change="MonthChange"
           />
           <el-date-picker

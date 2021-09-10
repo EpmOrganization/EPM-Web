@@ -1,9 +1,10 @@
 import request from '@/utils/request'
 
-export function getlist() {
+export function getlist(data) {
   return request({
     url: '/api/workitem/getlist',
-    method: 'get'
+    method: 'post',
+    data
   })
 }
 
