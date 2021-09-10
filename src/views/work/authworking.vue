@@ -127,7 +127,6 @@ export default {
     // 从后端接口获取数据  ES6中解构
     const { data } = await this.getdept()
     this.search.dept.options = data
-    console.log(this.search.dept.options)
   },
   methods: {
     ...mapActions('workItem', ['getlist', 'workitem_add', 'workitem_edit']),

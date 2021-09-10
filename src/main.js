@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import filter from './filter'
 import '@/icons'
 // 引入 ElementUI
 import ElementUI from 'element-ui'
@@ -16,6 +17,11 @@ import XChart from '@/components/XChart.vue'
 Vue.component('TablePage', TablePage)
 Vue.component('XChart', XChart)
 Vue.use(ElementUI, { size: 'small' })
+
+Object.keys(filter).forEach(key => {
+  Vue.filter(key, filter[key])
+})
+
 Vue.config.productionTip = false
 
 new Vue({

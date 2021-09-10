@@ -1,5 +1,5 @@
 // 引入api下的user
-import { login, userinfo, user, getrole, logout } from '@/api/user'
+import { login, userinfo, user, getrole, logout, dataAuthority, DataAuthorityAllotting } from '@/api/user'
 // 引入身份认证，操作token
 import { setToken, getToken, removeToken } from '@/utils/authentication'
 import sessionStorage from '@/utils/sessionStorage'
@@ -102,6 +102,26 @@ const actions = {
   setfun({ commit }, data) {
     sessionStorage.set('funlist', data || [])
     commit('SET_FUN', data || [])
+  },
+
+  dataAuthority({ commit }, data) {
+    return new Promise((resolve, reject) => {
+      dataAuthority(data).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  DataAuthorityAllotting({ commit }, data) {
+    return new Promise((resolve, reject) => {
+      DataAuthorityAllotting(data).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
   },
   // 计算左侧显示的菜单
   rolevoid(store, path) {

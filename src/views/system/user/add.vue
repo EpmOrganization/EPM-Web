@@ -162,16 +162,11 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const data = JSON.parse(JSON.stringify(this.from))
-          // console.log(data)
           if (data.dep && data.dep.length > 0) {
             data.departmentID = data.dep[data.dep.length - 1]
           } else {
             data.departmentID = null
           }
-          //   data.dep = JSON.stringify(data.dep)
-          //   if (!data.divisionID) {
-          //     delete data.divisionID
-          //   }
           this[this.api](data).then(res => {
             if (res.code === 1) {
               this.$message({

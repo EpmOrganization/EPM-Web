@@ -37,3 +37,22 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function dataAuthority(id) {
+  const params = {
+    id
+  }
+  return request({
+    url: '/api/dataAuthority',
+    method: 'get',
+    params
+  })
+}
+
+export function DataAuthorityAllotting(data) {
+  return request({
+    url: '/api/dataAuthority',
+    method: 'post',
+    data
+  })
+}

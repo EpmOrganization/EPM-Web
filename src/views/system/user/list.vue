@@ -20,14 +20,14 @@
       v-loading="loading"
       title="数据权限"
       :visible.sync="dialogVisible"
-      width="1200px"
+      width="600px"
     >
       <el-table
         ref="multipleTable"
         :data="tableData"
         style="width: 100%;"
-        row-key="id"
-        height="550"
+        row-key="deptId"
+        height="450"
         :tree-props="{children: 'children',hasChildren: 'hasChildren',}"
         :default-expand-all="false"
         @selection-change="handleSelectionChange"
@@ -39,33 +39,10 @@
           width="55"
         />
         <el-table-column
-          prop="description"
-          label="功能名称"
+          prop="deptName"
+          label="部门名称"
         />
-        <el-table-column
-          prop="value"
-          label="数据集参数"
-        />
-        <el-table-column
-          prop="type"
-          label="数据权限级别"
-        >
-          <template slot-scope="scope">
-            {{ options(scope.row.type) }}
-          </template>
-        </el-table-column>
       </el-table>
-      <!-- <el-tree
-        ref="tree"
-        :data="tableData"
-        node-key="id"
-        highlight-current
-        show-checkbox
-        check-strictly
-        default-expand-all
-        :props="defaultProps"
-        :default-checked-keys="checked"
-      /> -->
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dataok">确 定</el-button>
@@ -147,12 +124,12 @@ export default {
             type: 'primary'
             // role: 'roleedit'
           },
-          //   {
-          //     // name: '设置数据权限',
-          //     // type: 'primary',
-          //     // event: this.datarole
-          //     // role: 'roleedit'
-          //   },
+          {
+            name: '设置数据权限',
+            type: 'primary',
+            event: this.datarole
+            // role: 'roleedit'
+          },
           //   {
           //     name: '重置密码',
           //     type: 'primary',
@@ -217,6 +194,7 @@ export default {
       checked: []
     }
   },
+  // 异步初始化一些需要绑定的数据
   async created() {
     const data = await this.OrganizationalStructure()
     // const data1 = await this.role_tree()
@@ -231,7 +209,7 @@ export default {
     this.search.userGroupID.options = data
   },
   methods: {
-    ...mapActions('user', ['user', 'user_del', 'dataAuthority', 'DataAuthorityAllotting', 'ResetPassword']),
+    ...mapActions('user', ['user', 'user_del', 'dataAuthority', 'DataAuthorityAllotting']),
     ...mapActions('department', ['OrganizationalStructure']),
     // ...mapActions('role', ['role_tree']),
     updatalist() {
@@ -279,12 +257,12 @@ export default {
     },
     dataok() {
       const ids = this.multipleSelection.map(v => {
-        return v.id
+        return v.deptId
       })
       this.from.paraAuthorities = ids
       this.DataAuthorityAllotting(this.from).then(res => {
         this.$message({
-          message: res.resultMsg,
+          message: res.msg,
           type: 'success'
         })
         this.dialogVisible = false
@@ -310,6 +288,7 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val
     },
+    // 设置用户数据权限
     datarole({ row }) {
       this.loading = true
       this.from.userID = row.id
@@ -317,7 +296,6 @@ export default {
       this.dataAuthority(row.id).then(res => {
         const that = this
         this.tableData = res.data
-
         const treecheckedfilter = function(data) {
           data.map(v => {
             v.show = false
